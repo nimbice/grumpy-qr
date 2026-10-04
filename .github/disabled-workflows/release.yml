@@ -1,0 +1,70 @@
+# Inactive while in this folder. To turn it on, see docs/PUBLISHING.md ("Turning CI on later").
+name: Release
+
+# Push a tag like v1.0.0 to build a signed APK + Play bundle and publish a
+# GitHub release. Needs these repository secrets (see docs/PUBLISHING.md):
+#   GRUMPY_KEYSTORE_BASE64, GRUMPY_KEYSTORE_PASSWORD, GRUMPY_KEY_ALIAS, GRUMPY_KEY_PASSWORD
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - uses: gradle/actions/setup-gradle@v6
+
+      - name: Restore signing key
+        env:
+          KEYSTORE_BASE64: ${{ secrets.GRUMPY_KEYSTORE_BASE64 }}
+        run: |
+          if [ -z "$KEYSTORE_BASE64" ]; then
+            echo "::error::Signing secrets aren't set up. See docs/PUBLISHING.md."
+            exit 1
+          fi
+          echo "$KEYSTORE_BASE64" | base64 --decode > "$RUNNER_TEMP/release.jks"
+          echo "GRUMPY_KEYSTORE_PATH=$RUNNER_TEMP/release.jks" >> "$GITHUB_ENV"
+
+      - name: Test and build signed APK + bundle
+        env:
+          GRUMPY_KEYSTORE_PASSWORD: ${{ secrets.GRUMPY_KEYSTORE_PASSWORD }}
+          GRUMPY_KEY_ALIAS: ${{ secrets.GRUMPY_KEY_ALIAS }}
+          GRUMPY_KEY_PASSWORD: ${{ secrets.GRUMPY_KEY_PASSWORD }}
+        run: ./gradlew testDebugUnitTest assembleRelease bundleRelease
+
+      - name: Check permissions
+        run: bash tools/check-permissions.sh app/build/outputs/apk/release/app-release.apk
+
+      - name: Collect files
+        env:
+          TAG: ${{ github.ref_name }}
+        run: |
+          mkdir dist
+          cp app/build/outputs/apk/release/app-release.apk "dist/grumpy-qr-$TAG.apk"
+          (cd dist && sha256sum -- * > SHA256SUMS.txt)
+          rm "$RUNNER_TEMP/release.jks"
+
+      # The .aab is for uploading to Google Play by hand; it isn't attached to the release.
+      - uses: actions/upload-artifact@v7
+        with:
+          name: play-bundle
+          path: app/build/outputs/bundle/release/app-release.aab
+
+      - name: Publish GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          VERSION_CODE="$(sed -n 's/.*versionCode = \([0-9]*\).*/\1/p' app/build.gradle.kts)"
+          NOTES="fastlane/metadata/android/en-US/changelogs/$VERSION_CODE.txt"
+          gh release create "$TAG" dist/* --verify-tag --title "Grumpy QR $TAG" --notes-file "$NOTES"

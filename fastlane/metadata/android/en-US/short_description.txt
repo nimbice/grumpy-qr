@@ -1,0 +1,1 @@
+Scans QR codes and barcodes. No tracking, no internet access, nothing attached.

@@ -1,0 +1,1 @@
+First release. Scan with the camera, from photos and screenshots, or by sharing a picture or PDF to Grumpy QR. Shows where links really go, connects to Wi-Fi in one tap, keeps history on your phone only, and never touches the internet.

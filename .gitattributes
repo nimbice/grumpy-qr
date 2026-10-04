@@ -1,0 +1,7 @@
+# Keep line endings consistent on every platform (shell scripts need LF).
+* text=auto eol=lf
+*.bat text eol=crlf
+
+*.png binary
+*.jar binary
+*.pdf binary

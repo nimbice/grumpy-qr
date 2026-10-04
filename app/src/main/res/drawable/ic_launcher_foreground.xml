@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    The Grumpy QR face: two QR finder patterns as half-lidded eyes and a flat
+    mouth. A QR code that has had enough.
+    Drawn on the 108x108 adaptive icon canvas; everything sits inside the
+    66-unit safe zone so no launcher mask clips it.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- Left eye -->
+    <path
+        android:fillColor="@color/brand_ink"
+        android:fillType="evenOdd"
+        android:pathData="M36,31 H46 A5,5 0 0 1 51,36 V46 A5,5 0 0 1 46,51 H36 A5,5 0 0 1 31,46 V36 A5,5 0 0 1 36,31 Z
+            M38,35.5 H44 A2.5,2.5 0 0 1 46.5,38 V44 A2.5,2.5 0 0 1 44,46.5 H38 A2.5,2.5 0 0 1 35.5,44 V38 A2.5,2.5 0 0 1 38,35.5 Z" />
+    <path
+        android:fillColor="@color/brand_ink"
+        android:pathData="M38,41 H44 V43 A1,1 0 0 1 43,44 H39 A1,1 0 0 1 38,43 Z" />
+
+    <!-- Right eye -->
+    <path
+        android:fillColor="@color/brand_ink"
+        android:fillType="evenOdd"
+        android:pathData="M62,31 H72 A5,5 0 0 1 77,36 V46 A5,5 0 0 1 72,51 H62 A5,5 0 0 1 57,46 V36 A5,5 0 0 1 62,31 Z
+            M64,35.5 H70 A2.5,2.5 0 0 1 72.5,38 V44 A2.5,2.5 0 0 1 70,46.5 H64 A2.5,2.5 0 0 1 61.5,44 V38 A2.5,2.5 0 0 1 64,35.5 Z" />
+    <path
+        android:fillColor="@color/brand_ink"
+        android:pathData="M64,41 H70 V43 A1,1 0 0 1 69,44 H65 A1,1 0 0 1 64,43 Z" />
+
+    <!-- Unimpressed mouth -->
+    <path
+        android:fillColor="@color/brand_ink"
+        android:pathData="M42.5,64 H65.5 A2.5,2.5 0 0 1 68,66.5 A2.5,2.5 0 0 1 65.5,69 H42.5 A2.5,2.5 0 0 1 40,66.5 A2.5,2.5 0 0 1 42.5,64 Z" />
+</vector>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Quick Settings tile: the Grumpy QR face, scaled into a 24dp glyph. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <group
+        android:scaleX="0.5"
+        android:scaleY="0.5"
+        android:translateX="-15"
+        android:translateY="-13">
+        <path
+            android:fillColor="#FFFFFFFF"
+            android:fillType="evenOdd"
+            android:pathData="M36,31 H46 A5,5 0 0 1 51,36 V46 A5,5 0 0 1 46,51 H36 A5,5 0 0 1 31,46 V36 A5,5 0 0 1 36,31 Z
+                M38,35.5 H44 A2.5,2.5 0 0 1 46.5,38 V44 A2.5,2.5 0 0 1 44,46.5 H38 A2.5,2.5 0 0 1 35.5,44 V38 A2.5,2.5 0 0 1 38,35.5 Z
+                M62,31 H72 A5,5 0 0 1 77,36 V46 A5,5 0 0 1 72,51 H62 A5,5 0 0 1 57,46 V36 A5,5 0 0 1 62,31 Z
+                M64,35.5 H70 A2.5,2.5 0 0 1 72.5,38 V44 A2.5,2.5 0 0 1 70,46.5 H64 A2.5,2.5 0 0 1 61.5,44 V38 A2.5,2.5 0 0 1 64,35.5 Z" />
+        <path
+            android:fillColor="#FFFFFFFF"
+            android:pathData="M38,41 H44 V43 A1,1 0 0 1 43,44 H39 A1,1 0 0 1 38,43 Z
+                M64,41 H70 V43 A1,1 0 0 1 69,44 H65 A1,1 0 0 1 64,43 Z
+                M42.5,64 H65.5 A2.5,2.5 0 0 1 68,66.5 A2.5,2.5 0 0 1 65.5,69 H42.5 A2.5,2.5 0 0 1 40,66.5 A2.5,2.5 0 0 1 42.5,64 Z" />
+    </group>
+</vector>

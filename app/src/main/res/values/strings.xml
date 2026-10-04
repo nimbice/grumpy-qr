@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Grumpy QR</string>
+    <string name="share_target_label">Scan QR code</string>
+    <string name="tile_label">Scan QR code</string>
+    <string name="shortcut_scan_picture">Scan a picture</string>
+    <string name="shortcut_history">History</string>
+    <string name="url_source" translatable="false">https://github.com/nimbice/grumpy-qr</string>
+    <string name="url_privacy" translatable="false">https://github.com/nimbice/grumpy-qr/blob/main/PRIVACY.md</string>
+
+    <!-- Scanner -->
+    <string name="camera_preview_description">Camera viewfinder</string>
+    <string name="aim_hint">Point at a QR code or barcode</string>
+    <string name="scanning_for">Scanning for %1$s</string>
+    <string name="looking_for_codes">Looking for codes…</string>
+    <string name="torch_on">Turn on flashlight</string>
+    <string name="torch_off">Turn off flashlight</string>
+    <string name="tool_photos">Photos</string>
+    <string name="tool_files">Files</string>
+    <string name="tool_history">History</string>
+    <string name="tool_settings">Settings</string>
+    <string name="camera_off_title">Camera’s off</string>
+    <string name="camera_off_body">Grumpy QR needs the camera to scan live. You can still scan a screenshot, photo or PDF without it.</string>
+    <string name="no_camera_title">No camera here</string>
+    <string name="no_camera_body">This device doesn’t have a camera, but you can still scan screenshots, photos and PDFs.</string>
+    <string name="action_turn_on_camera">Turn on camera</string>
+    <string name="action_open_settings">Open app settings</string>
+    <string name="action_scan_picture">Scan a picture</string>
+
+    <!-- Shared pictures -->
+    <string name="shared_title">Scan picture</string>
+    <string name="shared_preview_description">The picture being scanned</string>
+    <string name="shared_failed_title">Couldn’t scan that</string>
+    <string name="nothing_found_title">No code in this one</string>
+    <string name="nothing_found_body">Try a sharper picture, or crop in closer to the code.</string>
+
+    <!-- Result types -->
+    <plurals name="found_codes">
+        <item quantity="one">Found %d code</item>
+        <item quantity="other">Found %d codes</item>
+    </plurals>
+    <string name="type_link">Link</string>
+    <string name="type_app_link">App link</string>
+    <string name="type_link_blocked">Blocked link</string>
+    <string name="type_wifi">Wi-Fi network</string>
+    <string name="type_contact">Contact</string>
+    <string name="type_email">Email</string>
+    <string name="type_phone">Phone number</string>
+    <string name="type_sms">Text message</string>
+    <string name="type_geo">Location</string>
+    <string name="type_event">Calendar event</string>
+    <string name="type_otp">Two-factor setup code</string>
+    <string name="type_passkey">Passkey sign-in</string>
+    <string name="type_payment_upi">UPI payment request</string>
+    <string name="type_payment_crypto">%1$s payment request</string>
+    <string name="type_payment_epc">Bank transfer (EPC)</string>
+    <string name="type_payment_swiss">Swiss QR-bill</string>
+    <string name="type_product">Product barcode</string>
+    <string name="type_book">Book (ISBN)</string>
+    <string name="type_recovery_phrase">Recovery phrase</string>
+    <string name="type_text">Text</string>
+
+    <!-- Result fields -->
+    <string name="field_network">Network</string>
+    <string name="field_security">Security</string>
+    <string name="field_password">Password</string>
+    <string name="field_name">Name</string>
+    <string name="field_organization">Work</string>
+    <string name="field_phone">Phone</string>
+    <string name="field_email">Email</string>
+    <string name="field_website">Website</string>
+    <string name="field_address">Address</string>
+    <string name="field_note">Note</string>
+    <string name="field_to">To</string>
+    <string name="field_subject">Subject</string>
+    <string name="field_message">Message</string>
+    <string name="field_place">Place</string>
+    <string name="field_coordinates">Coordinates</string>
+    <string name="field_event">Event</string>
+    <string name="field_when">When</string>
+    <string name="field_where">Where</string>
+    <string name="field_details">Details</string>
+    <string name="field_service">Service</string>
+    <string name="field_account_name">Account</string>
+    <string name="field_recipient">Pay to</string>
+    <string name="field_account">Account</string>
+    <string name="field_bic">BIC</string>
+    <string name="field_amount">Amount</string>
+    <string name="field_reference">Reference</string>
+    <string name="field_number">Number</string>
+    <string name="field_words">Words</string>
+
+    <string name="wifi_open">Open (no password)</string>
+    <string name="wifi_wep">WEP</string>
+    <string name="wifi_wpa">WPA/WPA2</string>
+    <string name="wifi_wpa3">WPA3</string>
+    <string name="wifi_enterprise">WPA Enterprise</string>
+    <string name="wifi_hidden">hidden network</string>
+
+    <!-- Result actions -->
+    <string name="action_copy">Copy</string>
+    <string name="action_share">Share</string>
+    <string name="action_open_link">Open link</string>
+    <string name="action_open_in_app">Open in app</string>
+    <string name="action_connect">Connect</string>
+    <string name="action_wifi_settings">Wi-Fi settings</string>
+    <string name="action_copy_password">Copy password</string>
+    <string name="action_add_contact">Add to contacts</string>
+    <string name="action_write_email">Write email</string>
+    <string name="action_copy_address">Copy address</string>
+    <string name="action_dial">Open in dialer</string>
+    <string name="action_write_message">Write message</string>
+    <string name="action_open_map">Open map</string>
+    <string name="action_add_event">Add to calendar</string>
+    <string name="action_open_authenticator">Open authenticator</string>
+    <string name="action_continue">Continue</string>
+    <string name="action_open_payment_app">Open payment app</string>
+    <string name="action_copy_account">Copy account</string>
+    <string name="action_search_web">Search the web</string>
+    <string name="show">Show</string>
+    <string name="hide">Hide</string>
+    <string name="show_all">Show all</string>
+    <string name="show_less">Show less</string>
+
+    <!-- Link check -->
+    <string name="link_goes_to">Goes to</string>
+    <string name="link_looks_like">Made to look like: %1$s</string>
+    <string name="note_blocked_scheme">Grumpy QR won’t open “%1$s:” links. They can run code or reach into other apps. You can still copy it.</string>
+    <string name="note_opens_app">Not a web page. This opens another app (%1$s:).</string>
+    <string name="note_hidden_username">The part before “@” is a disguise. This link really goes to %1$s.</string>
+    <string name="note_lookalike">This address uses non-Latin letters, and some look identical to normal ones. Make sure it’s really the site you expect.</string>
+    <string name="note_ip_address">Goes to a bare IP address instead of a named website.</string>
+    <string name="note_not_encrypted">Not encrypted (http, not https). Don’t enter passwords or card details.</string>
+    <string name="note_shortener">Goes through a link shortener or redirect service, so the real destination stays hidden until you open it.</string>
+    <string name="note_unusual_port">Uses an unusual port number. Ordinary websites rarely do.</string>
+
+    <!-- Sensitive content -->
+    <string name="otp_notice">This sets up two-factor sign-in codes for an account. Only use it if you’re the one setting that account up. It won’t be saved to history.</string>
+    <string name="passkey_notice">A website on another device wants to sign in with a passkey from this phone. Only continue if you started that sign-in yourself. It won’t be saved to history.</string>
+    <string name="payment_notice">Check who you’re paying before you confirm anything in your payment app.</string>
+    <plurals name="recovery_phrase_notice">
+        <item quantity="one">This looks like a crypto wallet recovery phrase (%1$d word). Anyone who has it can empty that wallet. Never type it into a website or share it with anyone. It won’t be saved to history.</item>
+        <item quantity="other">This looks like a crypto wallet recovery phrase (%1$d words). Anyone who has these words can empty that wallet. Never type them into a website or share them with anyone. It won’t be saved to history.</item>
+    </plurals>
+    <string name="wifi_manual_setup">This kind of network has to be added by hand. Copy the password, then pick the network in Wi-Fi settings.</string>
+
+    <!-- Details -->
+    <string name="details">Details</string>
+    <string name="detail_format">Format</string>
+    <string name="detail_error_correction">Error correction</string>
+    <string name="detail_characters">Characters</string>
+    <string name="detail_bytes">Bytes</string>
+    <string name="detail_scanned">Scanned</string>
+    <string name="detail_raw">Raw content (hidden characters shown)</string>
+    <string name="detail_hex">Raw bytes</string>
+
+    <!-- Messages -->
+    <string name="message_nothing_found">No code found in that picture.</string>
+    <string name="message_unreadable">Couldn’t open that file.</string>
+    <string name="message_pdf_locked">That PDF is password-protected.</string>
+    <string name="message_too_large">That file is too large to scan.</string>
+    <string name="message_decoder_unavailable">The scanner engine couldn’t start on this device.</string>
+    <string name="message_no_flash">This camera doesn’t have a flashlight.</string>
+    <string name="message_copied">Copied</string>
+    <string name="message_no_app">No app on this phone can open that.</string>
+    <string name="message_wifi_password_copied">Password copied. Pick the network in Wi-Fi settings.</string>
+    <string name="message_passkey_unsupported">Nothing on this phone handles passkey codes. Try your phone’s built-in camera app.</string>
+    <string name="message_history_exported">History exported.</string>
+    <string name="message_export_failed">Couldn’t export history.</string>
+
+    <!-- History -->
+    <string name="history_title">History</string>
+    <string name="history_export">Export as CSV</string>
+    <string name="history_clear">Clear history</string>
+    <string name="history_empty">Nothing here yet. Codes you scan show up here, and they never leave this phone.</string>
+    <string name="history_off">History is off, so nothing gets saved. You can turn it on in Settings.</string>
+    <string name="history_off_banner">History is off. New scans aren’t being saved.</string>
+    <string name="history_delete_item">Delete</string>
+    <string name="history_deleted">Deleted</string>
+    <string name="history_clear_title">Clear history?</string>
+    <plurals name="history_clear_body">
+        <item quantity="one">This deletes the %1$d saved scan on this phone.</item>
+        <item quantity="other">This deletes all %1$d saved scans on this phone.</item>
+    </plurals>
+    <string name="history_clear_confirm">Clear</string>
+
+    <!-- Settings and about -->
+    <string name="settings_title">Settings</string>
+    <string name="setting_history">Keep history</string>
+    <string name="setting_history_desc">Saved only on this phone. Two-factor codes, passkeys and recovery phrases are never saved.</string>
+    <string name="setting_link_notes">Point out sketchy links</string>
+    <string name="setting_link_notes_desc">Notes about shorteners, lookalike addresses, unencrypted links and other tricks. Checked on your phone, not online.</string>
+    <string name="setting_vibrate">Vibrate on scan</string>
+    <string name="setting_vibrate_desc">A short buzz when a code is found.</string>
+    <string name="about_heading">About Grumpy QR %1$s</string>
+    <string name="about_why">Most free QR scanners make you sit through ads, ask for permissions they have no business asking for, and quietly track what you scan, all to read a few dozen characters off a square.\n\nThis one doesn’t. No ads, no trackers, no accounts, no in-app purchases, no “premium.” It doesn’t even have permission to use the internet, so it couldn’t phone home if it wanted to.</string>
+    <string name="about_access_heading">What Grumpy QR can touch</string>
+    <string name="about_access">• Camera: only while the scanner is open, and only if you allow it.\n• Pictures and files: only the one you pick or share. No storage permission.\n• Internet: none. Links open in your browser, not in here.\n• History: stays on this phone. Turn it off anytime.</string>
+    <string name="about_signoff">Made by someone who’d had enough. Free and open source under the GPL-3.0.</string>
+    <string name="about_source">Source code</string>
+    <string name="about_source_desc">Read every line on GitHub</string>
+    <string name="about_privacy">Privacy policy</string>
+    <string name="about_privacy_desc">Short version: nothing is collected</string>
+    <string name="about_licenses">Open-source licenses</string>
+    <string name="about_licenses_desc">The code Grumpy QR is built on</string>
+    <string name="licenses_body">Grumpy QR is free software, licensed under the GNU General Public License v3.0.\n\nIt’s built with:\n• zxing-cpp (Apache 2.0)\n• AndroidX, CameraX and Jetpack Compose (Apache 2.0)\n• Kotlin (Apache 2.0)\n• Material icons (Apache 2.0)</string>
+
+    <!-- Common -->
+    <string name="back">Back</string>
+    <string name="close">Close</string>
+    <string name="cancel">Cancel</string>
+    <string name="undo">Undo</string>
+    <string name="just_now">Just now</string>
+</resources>

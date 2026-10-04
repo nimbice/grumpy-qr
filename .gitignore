@@ -1,0 +1,19 @@
+# Gradle / Android Studio
+.gradle/
+.kotlin/
+build/
+/local.properties
+/.idea/
+*.iml
+/captures
+.externalNativeBuild
+.cxx
+
+# Signing material — never commit these
+*.jks
+*.keystore
+keystore.properties
+
+# OS junk
+.DS_Store
+Thumbs.db

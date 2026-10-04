@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Lets debug and release builds sit side by side without looking identical. -->
+    <string name="app_name">Grumpy QR (debug)</string>
+</resources>

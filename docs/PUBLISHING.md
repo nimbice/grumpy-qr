@@ -8,7 +8,8 @@ The checklist for getting Grumpy QR from this folder to a public GitHub repo and
 
 - [ ] **App ID: `io.github.nimbice.grumpyqr`.** Once the first build is uploaded to Play, this can never change. If you rename the app, change `applicationId` in [`app/build.gradle.kts`](../app/build.gradle.kts) *before* the first upload. The Kotlin `namespace` can stay as it is.
 - [ ] **Name: "Grumpy QR Reader"** ("Grumpy QR" on the home screen). Do a quick trademark search ([USPTO](https://tmsearch.uspto.gov/), [EUIPO](https://euipo.europa.eu/eSearch/)) for software or app uses. A web search on 2026-10-04 found no QR app with this name.
-- [ ] **Signing key.** See the next section. Losing it means you can never ship another update to people who installed from GitHub.
+- [x] **Signing key.** Created on 2026-10-04 at `%USERPROFILE%\.keys\grumpy-qr-release.jks` (alias `grumpyqr`). Its password is in the git-ignored `keystore.properties`. Certificate SHA-256: `20:01:7B:DF:BC:94:2A:4D:61:95:76:41:61:BF:C5:7B:74:45:E1:7B:8C:98:16:90:CD:A9:23:CF:59:B3:69:66`.
+  - [ ] **Back up both files to two places** (for example your password manager plus a USB stick). Losing the key means you can never ship another update to people who installed from GitHub.
 
 ### Signing: one key you control, used everywhere (recommended)
 
@@ -43,12 +44,14 @@ There's no CI, so releases are built and checked on your PC. Set up `keystore.pr
 ```bash
 ./gradlew testDebugUnitTest lintDebug assembleRelease bundleRelease
 bash tools/check-permissions.sh app/build/outputs/apk/release/app-release.apk   # must say "OK"
-cp app/build/outputs/apk/release/app-release.apk grumpy-qr-v1.0.0.apk
-sha256sum grumpy-qr-v1.0.0.apk > SHA256SUMS.txt
-gh release create v1.0.0 grumpy-qr-v1.0.0.apk SHA256SUMS.txt --title "Grumpy QR v1.0.0" --notes-file fastlane/metadata/android/en-US/changelogs/1.txt
+cp app/build/outputs/apk/release/app-release.apk grumpy-qr.apk
+sha256sum grumpy-qr.apk > SHA256SUMS.txt
+gh release create v1.0.0 grumpy-qr.apk SHA256SUMS.txt --title "Grumpy QR v1.0.0" --notes-file fastlane/metadata/android/en-US/changelogs/1.txt
 ```
 
-The Play bundle is `app/build/outputs/bundle/release/app-release.aab`. Then add the signing certificate's SHA-256 fingerprint to the README's "Get it" section.
+Always name the asset **`grumpy-qr.apk`**. The README's download button points at `releases/latest/download/grumpy-qr.apk`, which always serves the newest release's file with that name. Don't mark releases as pre-release, because "latest" skips them.
+
+The Play bundle is `app/build/outputs/bundle/release/app-release.aab`.
 
 ### Turning CI on later (optional)
 

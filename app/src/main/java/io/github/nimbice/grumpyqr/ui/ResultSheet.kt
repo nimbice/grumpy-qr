@@ -306,6 +306,19 @@ private fun ResultCard(scan: Scan, fromHistory: Boolean, linkNotes: Boolean) {
         }
     }
 
+    // Always show exactly what the code says, unless the card already shows it word for word.
+    val shownVerbatim = when (content) {
+        is Content.Text -> scan.text
+        is Content.Link -> content.report.url
+        is Content.Product -> content.code
+        is Content.RecoveryPhrase -> scan.text
+        else -> null
+    }
+    val showContents = shownVerbatim?.trim() != scan.text.trim()
+    // Mask the contents whenever the card masks something, e.g. a Wi-Fi password.
+    val masked = content.isSensitive || (content is Content.Wifi && content.password != null)
+    if (showContents) CodeContents(scan.text, secret = masked)
+
     Spacer(Modifier.height(16.dp))
     FlowRow(
         horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -320,7 +333,58 @@ private fun ResultCard(scan: Scan, fromHistory: Boolean, linkNotes: Boolean) {
         }
     }
 
-    if (!content.isSensitive) Details(scan)
+    if (!content.isSensitive) Details(scan, includeRaw = !showContents)
+}
+
+/**
+ * Exactly what the code says. Hidden characters are made visible, and
+ * secrets (two-factor and passkey codes) stay masked until you ask.
+ */
+@Composable
+private fun CodeContents(text: String, secret: Boolean) {
+    var shown by rememberSaveable { mutableStateOf(!secret) }
+    var expanded by rememberSaveable { mutableStateOf(false) }
+    val long = text.lines().size > 8 || text.length > 400
+
+    Spacer(Modifier.height(12.dp))
+    Row(verticalAlignment = Alignment.CenterVertically) {
+        Text(
+            stringResource(R.string.code_contents),
+            style = MaterialTheme.typography.labelMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = Modifier.weight(1f),
+        )
+        if (secret) {
+            IconButton(onClick = { shown = !shown }) {
+                Icon(
+                    if (shown) Icons.Outlined.VisibilityOff else Icons.Outlined.Visibility,
+                    contentDescription = stringResource(if (shown) R.string.hide else R.string.show),
+                )
+            }
+        }
+    }
+    if (!secret) Spacer(Modifier.height(4.dp))
+    Surface(
+        color = MaterialTheme.colorScheme.surfaceContainerHigh,
+        shape = RoundedCornerShape(8.dp),
+        modifier = Modifier.fillMaxWidth(),
+    ) {
+        SelectionContainer {
+            Text(
+                text = if (shown) showInvisibleCharacters(text, markLineBreaks = false) else "•".repeat(minOf(text.length, 24)),
+                style = MaterialTheme.typography.bodyMedium,
+                fontFamily = FontFamily.Monospace,
+                maxLines = if (long && !expanded) 8 else Int.MAX_VALUE,
+                overflow = TextOverflow.Ellipsis,
+                modifier = Modifier.padding(12.dp),
+            )
+        }
+    }
+    if (long && shown) {
+        TextButton(onClick = { expanded = !expanded }) {
+            Text(stringResource(if (expanded) R.string.show_less else R.string.show_all))
+        }
+    }
 }
 
 @Composable
@@ -488,7 +552,7 @@ private fun Notice(text: String, warning: Boolean) {
 }
 
 @Composable
-private fun Details(scan: Scan) {
+private fun Details(scan: Scan, includeRaw: Boolean) {
     var open by rememberSaveable { mutableStateOf(false) }
     Spacer(Modifier.height(8.dp))
     TextButton(onClick = { open = !open }) {
@@ -507,14 +571,16 @@ private fun Details(scan: Scan) {
                 Instant.ofEpochMilli(scan.time).atZone(ZoneId.systemDefault())
                     .format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)),
             )
-            Spacer(Modifier.height(8.dp))
-            Text(stringResource(R.string.detail_raw), style = MaterialTheme.typography.labelMedium)
-            SelectionContainer {
-                Text(
-                    showInvisibleCharacters(scan.text),
-                    style = MaterialTheme.typography.bodySmall,
-                    fontFamily = FontFamily.Monospace,
-                )
+            if (includeRaw) {
+                Spacer(Modifier.height(8.dp))
+                Text(stringResource(R.string.detail_raw), style = MaterialTheme.typography.labelMedium)
+                SelectionContainer {
+                    Text(
+                        showInvisibleCharacters(scan.text),
+                        style = MaterialTheme.typography.bodySmall,
+                        fontFamily = FontFamily.Monospace,
+                    )
+                }
             }
             scan.bytes?.let { bytes ->
                 Spacer(Modifier.height(8.dp))
@@ -566,14 +632,15 @@ private fun formatEventTime(time: EventTime): String {
 /**
  * Makes control characters, zero-width characters and right-to-left
  * overrides visible. They can be used to make a link look like it goes
- * somewhere it doesn't.
+ * somewhere it doesn't. Line breaks and tabs get markers too, unless
+ * [markLineBreaks] is false.
  */
-internal fun showInvisibleCharacters(text: String): String = buildString {
+internal fun showInvisibleCharacters(text: String, markLineBreaks: Boolean = true): String = buildString {
     for (c in text) {
         when {
-            c == '\n' -> append("↵\n")
-            c == '\r' -> append("␍")
-            c == '\t' -> append("⇥")
+            c == '\n' -> append(if (markLineBreaks) "↵\n" else "\n")
+            c == '\r' -> if (markLineBreaks) append("␍")
+            c == '\t' -> append(if (markLineBreaks) "⇥" else "\t")
             c.code < 0x20 || c.code in 0x7F..0x9F || c.code in 0x200B..0x200F || c.code in 0x202A..0x202E ||
                 c.code in 0x2066..0x2069 || c.code == 0x2028 || c.code == 0x2029 || c.code == 0xFEFF ->
                 append(String.format(Locale.ROOT, "\\u%04X", c.code))

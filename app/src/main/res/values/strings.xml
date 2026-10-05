@@ -146,6 +146,7 @@
 
     <!-- Details -->
     <string name="details">Details</string>
+    <string name="code_contents">Code contents</string>
     <string name="detail_format">Format</string>
     <string name="detail_error_correction">Error correction</string>
     <string name="detail_characters">Characters</string>

@@ -6,6 +6,13 @@
 <p align="center"><b>A QR reader. That's it.</b></p>
 
 <p align="center">
+  <a href="https://github.com/nimbice/grumpy-qr/releases/latest/download/grumpy-qr.apk"><img src="https://img.shields.io/github/v/release/nimbice/grumpy-qr?style=for-the-badge&label=Download%20APK&logo=android&logoColor=white&labelColor=1F1A10&color=F4C430" alt="Download the APK" height="40" /></a>
+</p>
+<p align="center">
+  <a href="https://github.com/nimbice/grumpy-qr/releases/latest/download/grumpy-qr.apk"><b>Download grumpy-qr.apk</b></a> · Android 8.0 or newer · <a href="#get-it">how to install and verify</a>
+</p>
+
+<p align="center">
   <img src="https://img.shields.io/badge/license-GPL--3.0-blue" alt="GPL-3.0" />
   <img src="https://img.shields.io/badge/permissions-camera%20only-brightgreen" alt="Permissions: camera only" />
 </p>
@@ -51,8 +58,11 @@ aapt2 dump permissions grumpy-qr.apk
 
 ## Get it
 
+- **Download:** [grumpy-qr.apk](https://github.com/nimbice/grumpy-qr/releases/latest/download/grumpy-qr.apk) (Android 8.0 or newer). Open it on your phone to install. The first time, Android asks you to allow installs from your browser or file manager. Older versions and SHA-256 checksums are on the [releases page](https://github.com/nimbice/grumpy-qr/releases).
+- **Verify it (optional):** every APK is signed with the same key. Its certificate SHA-256 fingerprint is
+  `20:01:7B:DF:BC:94:2A:4D:61:95:76:41:61:BF:C5:7B:74:45:E1:7B:8C:98:16:90:CD:A9:23:CF:59:B3:69:66`.
+  Check it with `apksigner verify --print-certs grumpy-qr.apk` or the [AppVerifier](https://github.com/soupslurpr/AppVerifier) app.
 - **Google Play:** coming soon.
-- **GitHub Releases:** signed APKs with SHA-256 checksums on the [releases page](https://github.com/nimbice/grumpy-qr/releases).
 
 ## Build it yourself
 

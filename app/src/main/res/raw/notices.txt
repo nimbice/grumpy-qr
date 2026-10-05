@@ -1,0 +1,25 @@
+NOTICE files from components distributed with this app
+(Apache License 2.0, section 4(d))
+
+----------------------------------------------------------------------
+kotlinx.coroutines library
+----------------------------------------------------------------------
+kotlinx.coroutines library.
+Copyright 2016-2024 JetBrains s.r.o and contributors
+
+----------------------------------------------------------------------
+Eclipse Jakarta Dependency Injection
+----------------------------------------------------------------------
+This content is produced and maintained by the Eclipse Jakarta Dependency
+Injection project.
+
+Jakarta Dependency Injection is a trademark of the Eclipse Foundation.
+
+All content is the property of the respective authors or their employers.
+For more information regarding authorship of content, please consult the
+listed source code repository logs.
+
+This program and the accompanying materials are made available under the
+terms of the Apache License, Version 2.0.
+
+Source code: https://github.com/eclipse-ee4j/injection-api

@@ -4,7 +4,7 @@ _Last updated: October 4, 2026_
 
 **Short version: Grumpy QR doesn't collect, send, sell or share any data. It can't: the app has no permission to use the internet.**
 
-This policy covers the Grumpy QR Reader app for Android (package `io.github.nimbice.grumpyqr`).
+This policy covers the Grumpy QR Reader app for Android (package `io.github.nimbice.grumpyqr`), developed and published by **nimbice**, the developer listed on its Google Play and GitHub pages.
 
 ## What the app touches, and what happens to it
 

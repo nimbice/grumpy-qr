@@ -45,9 +45,13 @@ fun AppRoot(
                 Screen.SETTINGS -> SettingsScreen(
                     viewModel = viewModel,
                     onBack = { viewModel.screen = Screen.SCANNER },
+                    onOpenLicenses = { viewModel.screen = Screen.LICENSES },
                 )
+                Screen.LICENSES -> LicensesScreen(onBack = { viewModel.screen = Screen.SETTINGS })
             }
-            BackHandler(enabled = viewModel.screen != Screen.SCANNER) { viewModel.screen = Screen.SCANNER }
+            BackHandler(enabled = viewModel.screen != Screen.SCANNER) {
+                viewModel.screen = if (viewModel.screen == Screen.LICENSES) Screen.SETTINGS else Screen.SCANNER
+            }
         }
 
         viewModel.results?.let { scans ->

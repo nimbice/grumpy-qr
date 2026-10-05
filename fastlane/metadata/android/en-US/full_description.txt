@@ -1,33 +1,36 @@
-Grumpy QR is a QR code and barcode reader that does its job and then gets out of your way. It's grumpy about exactly one thing: apps that bury a simple scan under ads and junk.
+Grumpy QR is a QR code and barcode reader that does its job and then gets out of your way.
 
-Most free scanners make you sit through ads, ask for permissions they have no business asking for, and quietly track what you scan. Grumpy QR was made by someone who'd had enough of that. There are no ads, no trackers, no accounts and no in-app purchases. The app doesn't even have permission to use the internet, so it couldn't phone home if it wanted to. The source code is public, so you don't have to take anyone's word for it.
+It was made by someone who got tired of scan apps cluttered with ads, pop-ups and permission requests. Grumpy QR has no ads, no trackers, no accounts and no in-app purchases. It doesn't have permission to use the internet at all, so nothing you scan ever leaves your phone. The source code is public, so you can check all of this yourself.
 
-SCAN ANYTHING
-• Point your camera at a code. Pinch to zoom, tap to focus, flashlight for dark places.
+Scan anything
+• Point your camera at a code. Pinch to zoom, tap to focus, and use the flashlight in the dark.
 • Scan a screenshot or photo through the system photo picker. No storage permission needed.
 • Share a picture, screenshot or PDF from any app to Grumpy QR to scan it. Handy for tickets and boarding passes.
 • Reads QR, Micro QR, Data Matrix, Aztec, PDF417, EAN, UPC, Code 128 and more, including inverted (light-on-dark) codes.
 
-SEE WHERE A LINK REALLY GOES
-Before you open anything, Grumpy QR shows you the website a link actually leads to, and points out common tricks: link shorteners that hide the destination, lookalike letters, fake addresses with an "@" in them, unencrypted links, and links that try to run code. It's all checked on your phone. Links never open on their own.
+See where a link really goes
+Before you open anything, Grumpy QR shows the website a link actually leads to and points out common tricks: link shorteners that hide the destination, lookalike letters, fake addresses with an "@" in them, unencrypted links, and links that try to run code. It's all checked on your phone. Links never open on their own.
 
-DOES THE OBVIOUS THING
+Does the obvious thing
 • Wi-Fi codes: connect in one tap, or copy the password.
 • Contacts, calendar events, email, phone numbers, texts and map locations open in the apps you already use.
 • Payment codes (UPI, SEPA/EPC, Swiss QR-bill, Bitcoin and others) are laid out clearly so you can check who you're paying.
+• Every result shows exactly what the code says.
 
-CAREFUL WITH THE SENSITIVE STUFF
+Careful with sensitive codes
 Two-factor setup codes, passkey codes and crypto recovery phrases are flagged, hidden until you ask, and never saved to history.
 
-YOUR HISTORY STAYS YOURS
+Your history stays yours
 Scan history is kept only on your phone, left out of backups, and can be turned off, exported or cleared at any time.
 
-ALSO
+Also
 • Quick Settings tile and launcher shortcuts
 • Works as the scanner for other apps that use the standard ZXing scan request
 • Light and dark theme
 
-PERMISSIONS
+Permissions
 Camera, only while the scanner is open, and only if you allow it. That's the whole list.
 
-Open source under the GPL-3.0: https://github.com/nimbice/grumpy-qr
+Open source under the GNU GPL v3 or later: https://github.com/nimbice/grumpy-qr
+
+QR Code is a registered trademark of DENSO WAVE INCORPORATED.

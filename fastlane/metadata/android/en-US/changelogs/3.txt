@@ -1,0 +1,1 @@
+Adds a proper Open-source licenses screen (Settings) with the full license texts and notices for everything Grumpy QR is built on.

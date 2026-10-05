@@ -197,14 +197,21 @@
     <string name="about_why">Most free QR scanners make you sit through ads, ask for permissions they have no business asking for, and quietly track what you scan, all to read a few dozen characters off a square.\n\nThis one doesn’t. No ads, no trackers, no accounts, no in-app purchases, no “premium.” It doesn’t even have permission to use the internet, so it couldn’t phone home if it wanted to.</string>
     <string name="about_access_heading">What Grumpy QR can touch</string>
     <string name="about_access">• Camera: only while the scanner is open, and only if you allow it.\n• Pictures and files: only the one you pick or share. No storage permission.\n• Internet: none. Links open in your browser, not in here.\n• History: stays on this phone. Turn it off anytime.</string>
-    <string name="about_signoff">Made by someone who’d had enough. Free and open source under the GPL-3.0.</string>
+    <string name="about_signoff">Made by someone who’d had enough. Free and open source under the GNU GPL, version 3 or later.</string>
     <string name="about_source">Source code</string>
     <string name="about_source_desc">Read every line on GitHub</string>
     <string name="about_privacy">Privacy policy</string>
     <string name="about_privacy_desc">Short version: nothing is collected</string>
     <string name="about_licenses">Open-source licenses</string>
-    <string name="about_licenses_desc">The code Grumpy QR is built on</string>
-    <string name="licenses_body">Grumpy QR is free software, licensed under the GNU General Public License v3.0.\n\nIt’s built with:\n• zxing-cpp (Apache 2.0)\n• AndroidX, CameraX and Jetpack Compose (Apache 2.0)\n• Kotlin (Apache 2.0)\n• Material icons (Apache 2.0)</string>
+    <string name="about_licenses_desc">Licenses, notices and credits</string>
+    <string name="licenses_read_gpl">Read the GNU GPL</string>
+    <string name="licenses_third_party">Third-party software</string>
+    <string name="licenses_texts">License texts</string>
+    <string name="license_apache">Apache License 2.0</string>
+    <string name="license_bsd3">BSD 3-Clause License (libzueci)</string>
+    <string name="license_mit">MIT License (Checker Framework qualifiers)</string>
+    <string name="license_notices">NOTICE files</string>
+    <string name="trademark_qr_code">QR Code is a registered trademark of DENSO WAVE INCORPORATED.</string>
 
     <!-- Common -->
     <string name="back">Back</string>

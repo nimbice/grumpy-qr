@@ -15,7 +15,6 @@ import androidx.compose.material.icons.automirrored.outlined.ArrowBack
 import androidx.compose.material.icons.outlined.Code
 import androidx.compose.material.icons.outlined.Description
 import androidx.compose.material.icons.outlined.Gavel
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -25,13 +24,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
@@ -45,12 +39,11 @@ import io.github.nimbice.grumpyqr.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SettingsScreen(viewModel: AppViewModel, onBack: () -> Unit) {
+fun SettingsScreen(viewModel: AppViewModel, onBack: () -> Unit, onOpenLicenses: () -> Unit) {
     val settings = viewModel.settings
     val context = LocalContext.current
     val sourceUrl = stringResource(R.string.url_source)
     val privacyUrl = stringResource(R.string.url_privacy)
-    var showLicenses by remember { mutableStateOf(false) }
 
     Scaffold(
         topBar = {
@@ -108,22 +101,9 @@ fun SettingsScreen(viewModel: AppViewModel, onBack: () -> Unit) {
             LinkRow(Icons.Outlined.Description, R.string.about_privacy, R.string.about_privacy_desc) {
                 Actions.openLink(context, privacyUrl)
             }
-            LinkRow(Icons.Outlined.Gavel, R.string.about_licenses, R.string.about_licenses_desc) {
-                showLicenses = true
-            }
+            LinkRow(Icons.Outlined.Gavel, R.string.about_licenses, R.string.about_licenses_desc, onOpenLicenses)
             Spacer(Modifier.height(24.dp))
         }
-    }
-
-    if (showLicenses) {
-        AlertDialog(
-            onDismissRequest = { showLicenses = false },
-            title = { Text(stringResource(R.string.about_licenses)) },
-            text = { Text(stringResource(R.string.licenses_body)) },
-            confirmButton = {
-                TextButton(onClick = { showLicenses = false }) { Text(stringResource(R.string.close)) }
-            },
-        )
     }
 }
 

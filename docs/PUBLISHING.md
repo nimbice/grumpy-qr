@@ -2,6 +2,23 @@
 
 The checklist for getting Grumpy QR from this folder to a public GitHub repo and a live Play Store listing. Policy facts were checked on **2026-10-04**. Play rules change, so re-check anything marked ⚠️ before you rely on it.
 
+**Ready to submit?** The field-by-field Play Console values are in [PLAY_CONSOLE.md](PLAY_CONSOLE.md).
+
+## Compliance review (2026-10-04, v1.0.2)
+
+**Licenses**
+- Everything shipped in the APK was audited: 143 runtime libraries, plus zxing-cpp's native code. All are Apache-2.0, except libzueci (BSD-3-Clause, compiled into zxing-cpp) and the Checker Framework qualifiers (MIT). JSR-305's `javax.annotation.concurrent` annotations are CC BY 2.5. All are compatible with GPL-3.0-or-later.
+- The app shows the GPL notices the license requires (copyright, no warranty, where to get the license and source) under **Settings → Open-source licenses**.
+- The same screen holds the full Apache-2.0, BSD-3 and MIT texts and the two NOTICE files that apply (kotlinx.coroutines, Jakarta Inject). The texts live in `app/src/main/res/raw/`.
+- Store graphics use Roboto (Apache-2.0). No proprietary fonts or assets.
+- "QR Code is a registered trademark of DENSO WAVE INCORPORATED" appears in the app, the store description and the README.
+
+**Play policy**
+- Title, short description and icon contain no promotional or price words. The full description makes only factual claims, with no ALL-CAPS headings and no claims about specific competitors.
+- Screenshots use only neutral example data (example.com, a documentation IP range) and no third-party brands.
+- The privacy policy names the developer and app and gives a contact. It's linked from inside the app.
+- The app targets API 36, meets the 16 KB page-size rule, uses only the CAMERA permission (with a fallback when it's refused), uses the photo picker for images, has no ads or analytics, and collects no data.
+
 ---
 
 ## 0. Decide these first (they're permanent)

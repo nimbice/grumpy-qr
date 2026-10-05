@@ -21,7 +21,7 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
-enum class Screen { SCANNER, HISTORY, SETTINGS }
+enum class Screen { SCANNER, HISTORY, SETTINGS, LICENSES }
 
 enum class LaunchMode {
     /** Opened normally: live scanner. */

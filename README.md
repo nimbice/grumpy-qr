@@ -13,7 +13,7 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/license-GPL--3.0-blue" alt="GPL-3.0" />
+  <img src="https://img.shields.io/badge/license-GPL--3.0--or--later-blue" alt="GPL-3.0-or-later" />
   <img src="https://img.shields.io/badge/permissions-camera%20only-brightgreen" alt="Permissions: camera only" />
 </p>
 
@@ -94,7 +94,7 @@ To regenerate the store icon and feature graphic after changing the logo: `pip i
 | `Actions.kt` | Every hand-off to another app goes through a standard intent, which is why no contacts, calendar, phone or location permissions are needed. |
 | `AndroidManifest.xml` | The share target, the ZXing scan intent, the tile, and the lines that strip network permissions. |
 
-Dependencies are deliberately few: AndroidX (Core, Activity, Lifecycle, Compose, CameraX) and zxing-cpp. That's it.
+Direct dependencies are deliberately few: AndroidX (Core, Activity, Lifecycle, Compose, CameraX) and zxing-cpp. That's it. (They pull in a few more libraries; see [Third-party software](#third-party-software).)
 
 ## Prior art and thanks
 
@@ -112,4 +112,26 @@ Security issues: see [SECURITY.md](SECURITY.md).
 
 ## License
 
-[GPL-3.0](LICENSE). You're free to use, study, change and share Grumpy QR. If you distribute a modified version, you have to share its source code too, so nobody can take this, stuff it with ads and close it up.
+Copyright © 2026 nimbice.
+
+Grumpy QR is free software under the [GNU General Public License, version 3 or later](LICENSE) (`GPL-3.0-or-later`). You're free to use, study, change and share it. If you distribute a modified version, you have to share its source code too, so nobody can take this, stuff it with ads and close it up. It comes with no warranty.
+
+### Third-party software
+
+The app is built on these open-source components. Their full license texts and notices are in the app under **Settings → Open-source licenses**, and in [`app/src/main/res/raw/`](app/src/main/res/raw/).
+
+| Component | License |
+|---|---|
+| [zxing-cpp](https://github.com/zxing-cpp/zxing-cpp) (ZXing authors, Axel Waggershauser) | Apache-2.0 |
+| libzueci, bundled in zxing-cpp (© 2022 gitlost) | BSD-3-Clause |
+| Android Jetpack: AndroidX, Compose, Material 3, CameraX (The Android Open Source Project) | Apache-2.0 |
+| Material Design icons (Google) | Apache-2.0 |
+| Kotlin, kotlinx.coroutines, kotlinx.serialization, atomicfu (JetBrains) | Apache-2.0 |
+| Guava, Dagger, Error Prone / J2ObjC / AutoValue annotations (Google) | Apache-2.0 |
+| JSpecify, JetBrains annotations, Jakarta Inject, javax.inject | Apache-2.0 |
+| JSR-305 annotations (`javax.annotation.concurrent` parts © Brian Goetz and Tim Peierls) | Apache-2.0 / CC BY 2.5 |
+| Checker Framework qualifiers | MIT |
+
+The store graphics use the Roboto font (© Google, Apache-2.0).
+
+QR Code is a registered trademark of DENSO WAVE INCORPORATED.

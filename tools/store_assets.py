@@ -98,13 +98,33 @@ def render(width: int, height: int, paint) -> Image.Image:
     return big.resize((width, height), Image.LANCZOS)
 
 
-def font(names, size):
-    for name in names:
-        for folder in (Path("C:/Windows/Fonts"), Path("/usr/share/fonts/truetype/dejavu"), Path("/Library/Fonts")):
-            path = folder / name
-            if path.exists():
-                return ImageFont.truetype(str(path), size)
-    return ImageFont.load_default(size)
+def font(size: int, bold: bool) -> ImageFont.FreeTypeFont:
+    """
+    Roboto (Apache-2.0), the same typeface the app's UI uses. Point
+    ROBOTO_TTF at Roboto-Regular.ttf (the variable font from an Android
+    system image or from github.com/googlefonts/roboto-3-classic) if it isn't
+    installed. Falls back to DejaVu Sans, which is also freely licensed.
+    """
+    import os
+
+    candidates = [
+        os.environ.get("ROBOTO_TTF"),
+        "C:/Windows/Fonts/Roboto-Regular.ttf",
+        "/usr/share/fonts/truetype/roboto/unhinted/RobotoTTF/Roboto-Regular.ttf",
+        str(Path.home() / "Library/Fonts/Roboto-Regular.ttf"),
+    ]
+    for candidate in filter(None, candidates):
+        if Path(candidate).exists():
+            f = ImageFont.truetype(candidate, size)
+            try:
+                f.set_variation_by_axes([700 if bold else 400, 100, 0])  # wght, wdth, ital
+            except OSError:
+                pass  # a static (non-variable) Roboto
+            return f
+    dejavu = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf" if bold else "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
+    if Path(dejavu).exists():
+        return ImageFont.truetype(dejavu, size)
+    raise SystemExit("No freely licensed font found. Set ROBOTO_TTF to a Roboto-Regular.ttf file.")
 
 
 def icon():
@@ -122,9 +142,9 @@ def feature_graphic():
         s = 5.0 * ss
         glyph_h = GLYPH_BOTTOM - GLYPH_TOP
         draw_logo(d, s, 84 * ss - GLYPH_LEFT * s, (250 - glyph_h * 5.0 / 2) * ss - GLYPH_TOP * s)
-        title = font(["segoeuib.ttf", "DejaVuSans-Bold.ttf", "Arial Bold.ttf"], 96 * ss)
-        subtitle = font(["segoeuib.ttf", "DejaVuSans-Bold.ttf", "Arial Bold.ttf"], 46 * ss)
-        tagline = font(["segoeui.ttf", "DejaVuSans.ttf", "Arial.ttf"], 36 * ss)
+        title = font(96 * ss, bold=True)
+        subtitle = font(46 * ss, bold=True)
+        tagline = font(36 * ss, bold=False)
         d.text((380 * ss, 222 * ss), "Grumpy QR", font=title, fill=INK, anchor="ls")
         d.text((384 * ss, 284 * ss), "Reader", font=subtitle, fill=INK, anchor="ls")
         d.text((384 * ss, 342 * ss), "Scans the code. That\u2019s it.", font=tagline, fill=INK, anchor="ls")
@@ -190,10 +210,10 @@ def write_android_icons():
     group = "    <group>\n{}\n    </group>"
     DRAWABLE.joinpath("ic_launcher_foreground.xml").write_text(
         _vector("Launcher icon: grumpy finder-pattern eyes with \"QR\" for a mouth.", 108, 108,
-                group.format(_paths("@color/brand_ink"))), encoding="utf-8")
+                group.format(_paths("@color/brand_ink"))), encoding="utf-8", newline="\n")
     DRAWABLE.joinpath("ic_launcher_monochrome.xml").write_text(
         _vector("Themed (Android 13+) icon. The system recolours it.", 108, 108,
-                group.format(_paths("#FFFFFFFF"))), encoding="utf-8")
+                group.format(_paths("#FFFFFFFF"))), encoding="utf-8", newline="\n")
     # Quick Settings tile: the logo scaled to fill a 24dp glyph.
     w, h = GLYPH_RIGHT - GLYPH_LEFT, GLYPH_BOTTOM - GLYPH_TOP
     scale = 23 / max(w, h)
@@ -202,7 +222,7 @@ def write_android_icons():
     tile_group = (f'    <group android:scaleX="{_n(scale)}" android:scaleY="{_n(scale)}" '
                   f'android:translateX="{_n(tx)}" android:translateY="{_n(ty)}">\n{_paths("#FFFFFFFF")}\n    </group>')
     DRAWABLE.joinpath("ic_tile_scan.xml").write_text(
-        _vector("Quick Settings tile glyph.", 24, 24, tile_group), encoding="utf-8")
+        _vector("Quick Settings tile glyph.", 24, 24, tile_group), encoding="utf-8", newline="\n")
 
 
 if __name__ == "__main__":

@@ -1,44 +1,95 @@
 """
-Renders the Google Play / F-Droid store graphics from the same geometry as
-the launcher icon (app/src/main/res/drawable/ic_launcher_foreground.xml).
+The Grumpy QR logo, drawn from one set of shapes: two QR finder patterns as
+half-lidded eyes, with the letters "QR" as the mouth.
 
     pip install pillow
     python tools/store_assets.py
 
-Writes into fastlane/metadata/android/en-US/images/:
-    icon.png            512 x 512   (Play "App icon")
-    featureGraphic.png  1024 x 500  (Play "Feature graphic")
+Writes:
+    fastlane/metadata/android/en-US/images/icon.png            512 x 512   (Play "App icon")
+    fastlane/metadata/android/en-US/images/featureGraphic.png  1024 x 500  (Play "Feature graphic")
+    app/src/main/res/drawable/ic_launcher_foreground.xml       adaptive icon foreground
+    app/src/main/res/drawable/ic_launcher_monochrome.xml       Android 13+ themed icon
+    app/src/main/res/drawable/ic_tile_scan.xml                 Quick Settings tile
+
+All coordinates are on the 108 x 108 adaptive-icon canvas. Everything stays
+inside the 66-unit safe zone so no launcher mask clips it.
 """
 from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFont
 
+ROOT = Path(__file__).resolve().parent.parent
+IMAGES = ROOT / "fastlane" / "metadata" / "android" / "en-US" / "images"
+DRAWABLE = ROOT / "app" / "src" / "main" / "res" / "drawable"
+
 MUSTARD = (244, 196, 48)
 INK = (31, 26, 16)
 SUPERSAMPLE = 4
-OUT = Path(__file__).resolve().parent.parent / "fastlane" / "metadata" / "android" / "en-US" / "images"
+
+# Bounding box of the whole logo, for laying it out elsewhere.
+GLYPH_LEFT, GLYPH_TOP, GLYPH_RIGHT, GLYPH_BOTTOM = 31, 30, 77, 77
+
+STROKE = 4.4  # letter stroke, matching the eye rings
 
 
-def draw_face(draw: ImageDraw.ImageDraw, scale: float, dx: float, dy: float) -> None:
-    """Draws the face using the 108x108 adaptive-icon coordinates."""
+def shapes():
+    """The logo as simple primitives shared by the PNG and vector renderers."""
+    out = []
+    for ex in (31, 57):  # finder-pattern eyes
+        out.append(("ring", ex, 30, ex + 20, 50, 5, ex + 4.5, 34.5, ex + 15.5, 45.5, 2.5))
+        out.append(("pupil", ex + 7, 40, ex + 13, 43, 1))  # half-lidded: flat top
+
+    # "QR", cap height 17, centred under the eyes.
+    top, h, w, letter_w, gap = 58, 17, STROKE, 15.5, 4.0
+    hw = w / 2
+    x = 54 - (2 * letter_w + gap) / 2
+    y0, y1 = top + hw, top + h - hw
+    # Q: a rounded-square ring like the eyes, plus a tail.
+    qx0, qx1 = x + hw, x + letter_w - hw
+    out.append(("stroke_rrect", qx0, y0, qx1, y1, 3.5, w))
+    out.append(("line", qx1 - 3.5, y1 - 3.5, qx1 + 1.5, y1 + 2, w))
+    # R: bowl, stem and leg.
+    rx = x + letter_w + gap
+    sx = rx + hw
+    bowl_bottom = top + h * 0.56
+    out.append(("stroke_rrect", sx, y0, rx + letter_w - 3, bowl_bottom, 3.5, w))
+    out.append(("line", sx, y0, sx, y1, w))
+    out.append(("line", sx + 4.5, bowl_bottom, rx + letter_w - hw, y1, w))
+    return out
+
+
+# --- PNG rendering -----------------------------------------------------------
+
+def draw_logo(draw: ImageDraw.ImageDraw, scale: float, dx: float, dy: float) -> None:
+    def box(x0, y0, x1, y1):
+        return [x0 * scale + dx, y0 * scale + dy, x1 * scale + dx, y1 * scale + dy]
 
     def rr(x0, y0, x1, y1, r, fill):
-        draw.rounded_rectangle(
-            [x0 * scale + dx, y0 * scale + dy, x1 * scale + dx, y1 * scale + dy],
-            radius=r * scale,
-            fill=fill,
-        )
+        draw.rounded_rectangle(box(x0, y0, x1, y1), radius=max(r, 0) * scale, fill=fill)
 
-    def rect(x0, y0, x1, y1, fill):
-        draw.rectangle([x0 * scale + dx, y0 * scale + dy, x1 * scale + dx, y1 * scale + dy], fill=fill)
+    def dot(x, y, radius):
+        rr(x - radius, y - radius, x + radius, y + radius, radius, INK)
 
-    for ex in (31, 57):  # two finder-pattern eyes
-        rr(ex, 31, ex + 20, 51, 5, INK)
-        rr(ex + 4.5, 35.5, ex + 15.5, 46.5, 2.5, MUSTARD)
-        # half-lidded pupil: flat top, rounded bottom
-        rr(ex + 7, 41, ex + 13, 44, 1, INK)
-        rect(ex + 7, 41, ex + 13, 42, INK)
-    rr(40, 64, 68, 69, 2.5, INK)  # flat mouth
+    for shape in shapes():
+        kind = shape[0]
+        if kind == "ring":
+            _, ox0, oy0, ox1, oy1, orad, ix0, iy0, ix1, iy1, irad = shape
+            rr(ox0, oy0, ox1, oy1, orad, INK)
+            rr(ix0, iy0, ix1, iy1, irad, MUSTARD)
+        elif kind == "pupil":
+            _, x0, y0, x1, y1, r = shape
+            rr(x0, y0, x1, y1, r, INK)
+            draw.rectangle(box(x0, y0, x1, y0 + r), fill=INK)
+        elif kind == "stroke_rrect":
+            _, x0, y0, x1, y1, r, w = shape
+            rr(x0 - w / 2, y0 - w / 2, x1 + w / 2, y1 + w / 2, r + w / 2, INK)
+            rr(x0 + w / 2, y0 + w / 2, x1 - w / 2, y1 - w / 2, r - w / 2, MUSTARD)
+        elif kind == "line":
+            _, x0, y0, x1, y1, w = shape
+            draw.line([(x0 * scale + dx, y0 * scale + dy), (x1 * scale + dx, y1 * scale + dy)], fill=INK, width=round(w * scale))
+            dot(x0, y0, w / 2)
+            dot(x1, y1, w / 2)
 
 
 def render(width: int, height: int, paint) -> Image.Image:
@@ -61,16 +112,16 @@ def icon():
     # launcher's visible 72x72 area onto 512x512.
     def paint(d, ss):
         s = 512 * ss / 72
-        draw_face(d, s, -18 * s, -18 * s)
+        draw_logo(d, s, -18 * s, -18 * s)
 
     return render(512, 512, paint)
 
 
 def feature_graphic():
     def paint(d, ss):
-        s = 5.2 * ss
-        glyph_left, glyph_top = 84 * ss, (250 - 19 * 5.2) * ss  # glyph is 46 x 38 units
-        draw_face(d, s, glyph_left - 31 * s, glyph_top - 31 * s)
+        s = 5.0 * ss
+        glyph_h = GLYPH_BOTTOM - GLYPH_TOP
+        draw_logo(d, s, 84 * ss - GLYPH_LEFT * s, (250 - glyph_h * 5.0 / 2) * ss - GLYPH_TOP * s)
         title = font(["segoeuib.ttf", "DejaVuSans-Bold.ttf", "Arial Bold.ttf"], 96 * ss)
         subtitle = font(["segoeuib.ttf", "DejaVuSans-Bold.ttf", "Arial Bold.ttf"], 46 * ss)
         tagline = font(["segoeui.ttf", "DejaVuSans.ttf", "Arial.ttf"], 36 * ss)
@@ -81,8 +132,82 @@ def feature_graphic():
     return render(1024, 500, paint)
 
 
+# --- Android vector drawables -----------------------------------------------
+
+def _n(v: float) -> str:
+    return f"{v:.2f}".rstrip("0").rstrip(".")
+
+
+def _rrect_path(x0, y0, x1, y1, r) -> str:
+    n = _n
+    return (
+        f"M{n(x0 + r)},{n(y0)} H{n(x1 - r)} A{n(r)},{n(r)} 0 0 1 {n(x1)},{n(y0 + r)} "
+        f"V{n(y1 - r)} A{n(r)},{n(r)} 0 0 1 {n(x1 - r)},{n(y1)} "
+        f"H{n(x0 + r)} A{n(r)},{n(r)} 0 0 1 {n(x0)},{n(y1 - r)} "
+        f"V{n(y0 + r)} A{n(r)},{n(r)} 0 0 1 {n(x0 + r)},{n(y0)} Z"
+    )
+
+
+def _paths(color: str) -> str:
+    n = _n
+    out = []
+    for shape in shapes():
+        kind = shape[0]
+        if kind == "ring":
+            _, ox0, oy0, ox1, oy1, orad, ix0, iy0, ix1, iy1, irad = shape
+            data = _rrect_path(ox0, oy0, ox1, oy1, orad) + " " + _rrect_path(ix0, iy0, ix1, iy1, irad)
+            out.append(f'<path android:fillColor="{color}" android:fillType="evenOdd" android:pathData="{data}" />')
+        elif kind == "pupil":
+            _, x0, y0, x1, y1, r = shape
+            data = (f"M{n(x0)},{n(y0)} H{n(x1)} V{n(y1 - r)} A{n(r)},{n(r)} 0 0 1 {n(x1 - r)},{n(y1)} "
+                    f"H{n(x0 + r)} A{n(r)},{n(r)} 0 0 1 {n(x0)},{n(y1 - r)} Z")
+            out.append(f'<path android:fillColor="{color}" android:pathData="{data}" />')
+        elif kind == "stroke_rrect":
+            _, x0, y0, x1, y1, r, w = shape
+            out.append(f'<path android:strokeColor="{color}" android:strokeWidth="{n(w)}" '
+                       f'android:pathData="{_rrect_path(x0, y0, x1, y1, r)}" />')
+        elif kind == "line":
+            _, x0, y0, x1, y1, w = shape
+            out.append(f'<path android:strokeColor="{color}" android:strokeWidth="{n(w)}" '
+                       f'android:strokeLineCap="round" android:pathData="M{n(x0)},{n(y0)} L{n(x1)},{n(y1)}" />')
+    return "\n".join("        " + p for p in out)
+
+
+def _vector(comment: str, size_dp: int, viewport: int, body: str) -> str:
+    return f"""<?xml version="1.0" encoding="utf-8"?>
+<!-- {comment} Generated by tools/store_assets.py; edit the shapes there, not here. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="{size_dp}dp"
+    android:height="{size_dp}dp"
+    android:viewportWidth="{viewport}"
+    android:viewportHeight="{viewport}">
+{body}
+</vector>
+"""
+
+
+def write_android_icons():
+    group = "    <group>\n{}\n    </group>"
+    DRAWABLE.joinpath("ic_launcher_foreground.xml").write_text(
+        _vector("Launcher icon: grumpy finder-pattern eyes with \"QR\" for a mouth.", 108, 108,
+                group.format(_paths("@color/brand_ink"))), encoding="utf-8")
+    DRAWABLE.joinpath("ic_launcher_monochrome.xml").write_text(
+        _vector("Themed (Android 13+) icon. The system recolours it.", 108, 108,
+                group.format(_paths("#FFFFFFFF"))), encoding="utf-8")
+    # Quick Settings tile: the logo scaled to fill a 24dp glyph.
+    w, h = GLYPH_RIGHT - GLYPH_LEFT, GLYPH_BOTTOM - GLYPH_TOP
+    scale = 23 / max(w, h)
+    tx = (24 - w * scale) / 2 - GLYPH_LEFT * scale
+    ty = (24 - h * scale) / 2 - GLYPH_TOP * scale
+    tile_group = (f'    <group android:scaleX="{_n(scale)}" android:scaleY="{_n(scale)}" '
+                  f'android:translateX="{_n(tx)}" android:translateY="{_n(ty)}">\n{_paths("#FFFFFFFF")}\n    </group>')
+    DRAWABLE.joinpath("ic_tile_scan.xml").write_text(
+        _vector("Quick Settings tile glyph.", 24, 24, tile_group), encoding="utf-8")
+
+
 if __name__ == "__main__":
-    OUT.mkdir(parents=True, exist_ok=True)
-    icon().save(OUT / "icon.png")
-    feature_graphic().save(OUT / "featureGraphic.png")
-    print(f"Wrote {OUT / 'icon.png'} and {OUT / 'featureGraphic.png'}")
+    IMAGES.mkdir(parents=True, exist_ok=True)
+    icon().save(IMAGES / "icon.png")
+    feature_graphic().save(IMAGES / "featureGraphic.png")
+    write_android_icons()
+    print("Wrote store images and Android icon drawables.")

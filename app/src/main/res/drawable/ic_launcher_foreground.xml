@@ -6,14 +6,15 @@
     android:viewportWidth="108"
     android:viewportHeight="108">
     <group>
-        <path android:fillColor="@color/brand_ink" android:fillType="evenOdd" android:pathData="M36,30 H46 A5,5 0 0 1 51,35 V45 A5,5 0 0 1 46,50 H36 A5,5 0 0 1 31,45 V35 A5,5 0 0 1 36,30 Z M38,34.5 H44 A2.5,2.5 0 0 1 46.5,37 V43 A2.5,2.5 0 0 1 44,45.5 H38 A2.5,2.5 0 0 1 35.5,43 V37 A2.5,2.5 0 0 1 38,34.5 Z" />
-        <path android:fillColor="@color/brand_ink" android:pathData="M38,40 H44 V42 A1,1 0 0 1 43,43 H39 A1,1 0 0 1 38,42 Z" />
-        <path android:fillColor="@color/brand_ink" android:fillType="evenOdd" android:pathData="M62,30 H72 A5,5 0 0 1 77,35 V45 A5,5 0 0 1 72,50 H62 A5,5 0 0 1 57,45 V35 A5,5 0 0 1 62,30 Z M64,34.5 H70 A2.5,2.5 0 0 1 72.5,37 V43 A2.5,2.5 0 0 1 70,45.5 H64 A2.5,2.5 0 0 1 61.5,43 V37 A2.5,2.5 0 0 1 64,34.5 Z" />
-        <path android:fillColor="@color/brand_ink" android:pathData="M64,40 H70 V42 A1,1 0 0 1 69,43 H65 A1,1 0 0 1 64,42 Z" />
-        <path android:strokeColor="@color/brand_ink" android:strokeWidth="4.4" android:pathData="M42.2,60.2 H46.3 A3.5,3.5 0 0 1 49.8,63.7 V69.3 A3.5,3.5 0 0 1 46.3,72.8 H42.2 A3.5,3.5 0 0 1 38.7,69.3 V63.7 A3.5,3.5 0 0 1 42.2,60.2 Z" />
-        <path android:strokeColor="@color/brand_ink" android:strokeWidth="4.4" android:strokeLineCap="round" android:pathData="M46.3,69.3 L51.3,74.8" />
-        <path android:strokeColor="@color/brand_ink" android:strokeWidth="4.4" android:pathData="M61.7,60.2 H65 A3.5,3.5 0 0 1 68.5,63.7 V64.02 A3.5,3.5 0 0 1 65,67.52 H61.7 A3.5,3.5 0 0 1 58.2,64.02 V63.7 A3.5,3.5 0 0 1 61.7,60.2 Z" />
-        <path android:strokeColor="@color/brand_ink" android:strokeWidth="4.4" android:strokeLineCap="round" android:pathData="M58.2,60.2 L58.2,72.8" />
-        <path android:strokeColor="@color/brand_ink" android:strokeWidth="4.4" android:strokeLineCap="round" android:pathData="M62.7,67.52 L69.3,72.8" />
+        <path android:fillColor="@color/brand_ink" android:fillType="evenOdd" android:pathData="M36.75,28 H46.25 A4.75,4.75 0 0 1 51,32.75 V42.25 A4.75,4.75 0 0 1 46.25,47 H36.75 A4.75,4.75 0 0 1 32,42.25 V32.75 A4.75,4.75 0 0 1 36.75,28 Z M38.65,32.27 H44.35 A2.38,2.38 0 0 1 46.73,34.65 V40.35 A2.38,2.38 0 0 1 44.35,42.73 H38.65 A2.38,2.38 0 0 1 36.27,40.35 V34.65 A2.38,2.38 0 0 1 38.65,32.27 Z" />
+        <path android:fillColor="@color/brand_ink" android:pathData="M38.65,37.5 H44.35 V39.4 A0.95,0.95 0 0 1 43.4,40.35 H39.6 A0.95,0.95 0 0 1 38.65,39.4 Z" />
+        <path android:fillColor="@color/brand_ink" android:fillType="evenOdd" android:pathData="M61.75,28 H71.25 A4.75,4.75 0 0 1 76,32.75 V42.25 A4.75,4.75 0 0 1 71.25,47 H61.75 A4.75,4.75 0 0 1 57,42.25 V32.75 A4.75,4.75 0 0 1 61.75,28 Z M63.65,32.27 H69.35 A2.38,2.38 0 0 1 71.72,34.65 V40.35 A2.38,2.38 0 0 1 69.35,42.73 H63.65 A2.38,2.38 0 0 1 61.27,40.35 V34.65 A2.38,2.38 0 0 1 63.65,32.27 Z" />
+        <path android:fillColor="@color/brand_ink" android:pathData="M63.65,37.5 H69.35 V39.4 A0.95,0.95 0 0 1 68.4,40.35 H64.6 A0.95,0.95 0 0 1 63.65,39.4 Z" />
+        <path android:fillColor="@color/brand_ink" android:pathData="M43.25,53 H64.75 A2.25,2.25 0 0 1 67,55.25 V55.25 A2.25,2.25 0 0 1 64.75,57.5 H43.25 A2.25,2.25 0 0 1 41,55.25 V55.25 A2.25,2.25 0 0 1 43.25,53 Z" />
+        <path android:strokeColor="@color/brand_ink" android:strokeWidth="3.8" android:pathData="M44.53,65.4 H47.47 A2.88,2.88 0 0 1 50.35,68.28 V72.72 A2.88,2.88 0 0 1 47.47,75.6 H44.53 A2.88,2.88 0 0 1 41.65,72.72 V68.28 A2.88,2.88 0 0 1 44.53,65.4 Z" />
+        <path android:strokeColor="@color/brand_ink" android:strokeWidth="3.8" android:strokeLineCap="round" android:pathData="M47.47,72.72 L51.59,77.25" />
+        <path android:strokeColor="@color/brand_ink" android:strokeWidth="3.8" android:pathData="M60.53,65.4 H62.9 A2.88,2.88 0 0 1 65.78,68.28 V68.46 A2.88,2.88 0 0 1 62.9,71.34 H60.53 A2.88,2.88 0 0 1 57.65,68.46 V68.28 A2.88,2.88 0 0 1 60.53,65.4 Z" />
+        <path android:strokeColor="@color/brand_ink" android:strokeWidth="3.8" android:strokeLineCap="round" android:pathData="M57.65,65.4 L57.65,75.6" />
+        <path android:strokeColor="@color/brand_ink" android:strokeWidth="3.8" android:strokeLineCap="round" android:pathData="M61.36,71.34 L66.35,75.6" />
     </group>
 </vector>

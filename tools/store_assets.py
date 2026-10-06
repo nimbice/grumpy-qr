@@ -27,36 +27,64 @@ MUSTARD = (244, 196, 48)
 INK = (31, 26, 16)
 SUPERSAMPLE = 4
 
-# Bounding box of the whole logo, for laying it out elsewhere.
-GLYPH_LEFT, GLYPH_TOP, GLYPH_RIGHT, GLYPH_BOTTOM = 31, 30, 77, 77
-
-STROKE = 4.4  # letter stroke, matching the eye rings
+EYE = 19       # finder-pattern eye size
+STROKE = 3.8   # letter stroke
 
 
 def shapes():
     """The logo as simple primitives shared by the PNG and vector renderers."""
     out = []
-    for ex in (31, 57):  # finder-pattern eyes
-        out.append(("ring", ex, 30, ex + 20, 50, 5, ex + 4.5, 34.5, ex + 15.5, 45.5, 2.5))
-        out.append(("pupil", ex + 7, 40, ex + 13, 43, 1))  # half-lidded: flat top
+    s = EYE / 20
+    top = 28
+    for ex in (54 - 3 - EYE, 54 + 3):  # finder-pattern eyes
+        out.append(("ring", ex, top, ex + EYE, top + EYE, 5 * s,
+                    ex + 4.5 * s, top + 4.5 * s, ex + EYE - 4.5 * s, top + EYE - 4.5 * s, 2.5 * s))
+        out.append(("pupil", ex + 7 * s, top + 10 * s, ex + 13 * s, top + 13 * s, s))  # half-lidded: flat top
 
-    # "QR", cap height 17, centred under the eyes.
-    top, h, w, letter_w, gap = 58, 17, STROKE, 15.5, 4.0
+    # Flat, unimpressed mouth.
+    mouth_top = top + EYE + 6
+    out.append(("rrect", 41, mouth_top, 67, mouth_top + 4.5, 2.25))
+
+    # "QR" underneath, centred.
+    ltop, h, w, letter_w, gap = mouth_top + 4.5 + 6, 14, STROKE, 12.5, 3.5
+    k = h / 17
     hw = w / 2
     x = 54 - (2 * letter_w + gap) / 2
-    y0, y1 = top + hw, top + h - hw
+    y0, y1 = ltop + hw, ltop + h - hw
     # Q: a rounded-square ring like the eyes, plus a tail.
     qx0, qx1 = x + hw, x + letter_w - hw
-    out.append(("stroke_rrect", qx0, y0, qx1, y1, 3.5, w))
-    out.append(("line", qx1 - 3.5, y1 - 3.5, qx1 + 1.5, y1 + 2, w))
+    out.append(("stroke_rrect", qx0, y0, qx1, y1, 3.5 * k, w))
+    out.append(("line", qx1 - 3.5 * k, y1 - 3.5 * k, qx1 + 1.5 * k, y1 + 2 * k, w))
     # R: bowl, stem and leg.
     rx = x + letter_w + gap
     sx = rx + hw
-    bowl_bottom = top + h * 0.56
-    out.append(("stroke_rrect", sx, y0, rx + letter_w - 3, bowl_bottom, 3.5, w))
+    bowl_bottom = ltop + h * 0.56
+    out.append(("stroke_rrect", sx, y0, rx + letter_w - 3 * k, bowl_bottom, 3.5 * k, w))
     out.append(("line", sx, y0, sx, y1, w))
-    out.append(("line", sx + 4.5, bowl_bottom, rx + letter_w - hw, y1, w))
+    out.append(("line", sx + 4.5 * k, bowl_bottom, rx + letter_w - hw, y1, w))
     return out
+
+
+def glyph_bounds():
+    """Bounding box (left, top, right, bottom) of the whole logo."""
+    xs, ys = [], []
+    for shape in shapes():
+        kind = shape[0]
+        if kind in ("ring", "pupil", "rrect"):
+            xs += [shape[1], shape[3]]
+            ys += [shape[2], shape[4]]
+        elif kind == "stroke_rrect":
+            w = shape[6] / 2
+            xs += [shape[1] - w, shape[3] + w]
+            ys += [shape[2] - w, shape[4] + w]
+        elif kind == "line":
+            w = shape[5] / 2
+            xs += [shape[1] - w, shape[3] + w, shape[1] + w, shape[3] - w]
+            ys += [shape[2] - w, shape[4] + w, shape[2] + w, shape[4] - w]
+    return min(xs), min(ys), max(xs), max(ys)
+
+
+GLYPH_LEFT, GLYPH_TOP, GLYPH_RIGHT, GLYPH_BOTTOM = glyph_bounds()
 
 
 # --- PNG rendering -----------------------------------------------------------
@@ -81,6 +109,9 @@ def draw_logo(draw: ImageDraw.ImageDraw, scale: float, dx: float, dy: float) -> 
             _, x0, y0, x1, y1, r = shape
             rr(x0, y0, x1, y1, r, INK)
             draw.rectangle(box(x0, y0, x1, y0 + r), fill=INK)
+        elif kind == "rrect":
+            _, x0, y0, x1, y1, r = shape
+            rr(x0, y0, x1, y1, r, INK)
         elif kind == "stroke_rrect":
             _, x0, y0, x1, y1, r, w = shape
             rr(x0 - w / 2, y0 - w / 2, x1 + w / 2, y1 + w / 2, r + w / 2, INK)
@@ -182,6 +213,9 @@ def _paths(color: str) -> str:
             data = (f"M{n(x0)},{n(y0)} H{n(x1)} V{n(y1 - r)} A{n(r)},{n(r)} 0 0 1 {n(x1 - r)},{n(y1)} "
                     f"H{n(x0 + r)} A{n(r)},{n(r)} 0 0 1 {n(x0)},{n(y1 - r)} Z")
             out.append(f'<path android:fillColor="{color}" android:pathData="{data}" />')
+        elif kind == "rrect":
+            _, x0, y0, x1, y1, r = shape
+            out.append(f'<path android:fillColor="{color}" android:pathData="{_rrect_path(x0, y0, x1, y1, r)}" />')
         elif kind == "stroke_rrect":
             _, x0, y0, x1, y1, r, w = shape
             out.append(f'<path android:strokeColor="{color}" android:strokeWidth="{n(w)}" '
